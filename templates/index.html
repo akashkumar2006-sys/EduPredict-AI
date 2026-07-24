@@ -1,1 +1,38 @@
 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EduPredict AI</title>
+</head>
+<body>
+
+<h1>🎓 EduPredict AI</h1>
+<h2>Student Score Prediction System</h2>
+
+<form action="/predict" method="POST">
+
+    <label>Hours Studied</label><br>
+    <input type="number" name="hours" required><br><br>
+
+    <label>Previous Score</label><br>
+    <input type="number" name="previous" required><br><br>
+
+    <label>Attendance (%)</label><br>
+    <input type="number" name="attendance" required><br><br>
+
+    <label>Sleep Hours</label><br>
+    <input type="number" name="sleep" required><br><br>
+
+    <label>Sample Papers Practiced</label><br>
+    <input type="number" name="papers" required><br><br>
+
+    <button type="submit">Predict Score</button>
+
+</form>
+
+{% if prediction %}
+<h2>Predicted Score: {{ prediction }}</h2>
+{% endif %}
+
+</body>
+</html>
