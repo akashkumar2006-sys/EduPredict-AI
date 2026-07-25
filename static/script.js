@@ -1,424 +1,154 @@
-/* ================================
-   EduPredict AI - Premium CSS
-   Glassmorphism AI Portfolio Style
-================================ */
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    min-height: 100vh;
-    background:
-        radial-gradient(circle at top left, #2563eb, transparent 35%),
-        radial-gradient(circle at bottom right, #06b6d4, transparent 35%),
-        linear-gradient(135deg, #020617, #0f172a);
-    color: #ffffff;
-    overflow-x: hidden;
-}
-
-
-/* Background Glow */
-
-body::before,
-body::after {
-    content: "";
-    position: fixed;
-    width: 350px;
-    height: 350px;
-    border-radius: 50%;
-    filter: blur(120px);
-    z-index: -1;
-}
-
-body::before {
-    background: #2563eb;
-    top: -120px;
-    left: -100px;
-}
-
-body::after {
-    background: #06b6d4;
-    bottom: -120px;
-    right: -100px;
-}
-
-
-/* Main Container */
-
-.container {
-    width: 90%;
-    max-width: 1200px;
-    margin: auto;
-}
-
-
-/* Glass Common */
-
-.glass {
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.15);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.25);
-}
-
-
-/* ================= HEADER ================= */
-
-header {
-    padding: 25px 0;
-}
-
-.logo,
-.brand {
-    font-size: 30px;
-    font-weight: 800;
-    background: linear-gradient(90deg,#38bdf8,#60a5fa,#818cf8);
-    -webkit-background-clip: text;
-    color: transparent;
-}
-
-header p {
-    color: #cbd5e1;
-}
-
-
-/* ================= HERO ================= */
-
-.hero {
-    text-align: center;
-    padding: 80px 20px 50px;
-}
-
-.hero h1 {
-    font-size: clamp(35px,5vw,65px);
-    font-weight: 800;
-    line-height: 1.1;
-}
-
-.hero h1 span {
-    background: linear-gradient(90deg,#22d3ee,#3b82f6);
-    -webkit-background-clip: text;
-    color: transparent;
-}
-
-.hero p {
-    max-width: 700px;
-    margin: 20px auto;
-    color: #cbd5e1;
-    font-size: 18px;
-}
+/* =====================================
+   EduPredict AI - Final JavaScript
+===================================== */
 
 
-/* ================= INPUT SECTION ================= */
+document.addEventListener("DOMContentLoaded", () => {
 
-.prediction-card {
-    padding: 35px;
-    border-radius: 25px;
-    background: rgba(255,255,255,0.08);
-    border:1px solid rgba(255,255,255,0.15);
-    backdrop-filter: blur(25px);
-}
+    const form = document.querySelector("#predictionForm");
+    const resultCircle = document.querySelector(".result-circle h2");
+    const resultText = document.querySelector(".result-circle span");
+    const resetBtn = document.querySelector(".reset-btn");
+    const predictBtn = document.querySelector(".predict-btn");
 
 
-.input-grid {
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:25px;
-}
+    /* ---------- Prediction ---------- */
 
+    form.addEventListener("submit", async (event) => {
 
-.input-card {
-    padding:22px;
-    border-radius:20px;
-    background:rgba(255,255,255,0.07);
-    border:1px solid rgba(255,255,255,0.12);
-    transition:.3s;
-}
+        event.preventDefault();
 
 
-.input-card:hover {
-    transform:translateY(-5px);
-    background:rgba(255,255,255,0.12);
-}
+        const inputs = form.querySelectorAll("input");
 
+        let values = [];
 
-.input-card label {
-    display:block;
-    font-size:15px;
-    font-weight:600;
-    margin-bottom:12px;
-    color:#e0f2fe;
-}
 
+        inputs.forEach(input => {
+            values.push(Number(input.value));
+        });
 
-.input-card input {
-    width:100%;
-    padding:14px;
-    border-radius:12px;
-    border:none;
-    outline:none;
-    background:rgba(15,23,42,.8);
-    color:white;
-    font-size:16px;
-}
 
 
-.input-card input:focus {
-    box-shadow:0 0 0 2px #38bdf8;
-}
+        // Validation
 
+        if(values.some(value => isNaN(value))){
 
-/* ================= BUTTONS ================= */
+            alert("Please enter valid values for all fields.");
+            return;
 
+        }
 
-.button-group {
-    display:flex;
-    justify-content:center;
-    gap:20px;
-    margin-top:35px;
-}
 
 
-button {
-    padding:14px 35px;
-    border-radius:50px;
-    border:none;
-    cursor:pointer;
-    font-size:16px;
-    font-weight:600;
-    transition:.3s;
-}
+        predictBtn.innerHTML = "Predicting...";
 
+        predictBtn.disabled = true;
 
-.predict-btn {
-    color:white;
-    background:linear-gradient(90deg,#2563eb,#06b6d4);
-    box-shadow:0 10px 30px rgba(37,99,235,.4);
-}
 
 
-.predict-btn:hover {
-    transform:translateY(-3px);
-}
+        try{
 
 
-.reset-btn {
-    background:rgba(255,255,255,.12);
-    color:white;
-    border:1px solid rgba(255,255,255,.2);
-}
+            const response = await fetch("/predict",{
 
+                method:"POST",
 
-.reset-btn:hover {
-    background:white;
-    color:#0f172a;
-}
+                headers:{
+                    "Content-Type":"application/json"
+                },
 
 
-/* ================= RESULT CIRCLE ================= */
+                body:JSON.stringify({
 
+                    hours_studied:values[0],
 
-.result-section {
-    text-align:center;
-    margin:60px 0;
-}
+                    previous_score:values[1],
 
+                    attendance:values[2],
 
-.result-circle {
-    width:220px;
-    height:220px;
-    margin:30px auto;
-    border-radius:50%;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
+                    sleep_hours:values[3],
 
-    background:
-    radial-gradient(circle,#38bdf8,#2563eb);
+                    sample_papers:values[4]
 
-    box-shadow:
-    0 0 40px rgba(56,189,248,.6),
-    inset 0 0 30px rgba(255,255,255,.2);
-}
+                })
 
+            });
 
-.result-circle h2 {
-    font-size:45px;
-    font-weight:800;
-}
 
 
-.result-circle span {
-    color:#e0f2fe;
-}
+            const data = await response.json();
 
 
-/* ================= FEATURES ================= */
 
+            if(data.prediction !== undefined){
 
-.features {
-    padding:60px 0;
-}
 
+                resultCircle.innerHTML =
+                Math.round(data.prediction) + "%";
 
-.section-title {
-    text-align:center;
-    font-size:35px;
-    margin-bottom:40px;
-}
 
+                resultText.innerHTML =
+                "Predicted Performance";
 
-.feature-grid {
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:25px;
-}
 
+            }
 
-.feature-card {
-    padding:30px;
-    text-align:center;
-    border-radius:22px;
-    background:rgba(255,255,255,.08);
-    border:1px solid rgba(255,255,255,.15);
-    transition:.3s;
-}
+            else{
 
+                resultCircle.innerHTML="--";
+                resultText.innerHTML="Prediction Failed";
 
-.feature-card:hover {
-    transform:translateY(-8px);
-}
+            }
 
 
-.feature-card h3 {
-    margin:15px 0;
-}
 
+        }
 
-.feature-card p {
-    color:#cbd5e1;
-}
 
+        catch(error){
 
-/* ================= ABOUT ================= */
+            console.log(error);
 
+            resultCircle.innerHTML="--";
 
-.about {
-    padding:70px 30px;
-    text-align:center;
-}
+            resultText.innerHTML=
+            "Server Error";
 
+        }
 
-.about p {
-    max-width:800px;
-    margin:auto;
-    color:#cbd5e1;
-    line-height:1.8;
-}
 
 
-/* ================= FOOTER ================= */
+        finally{
 
+            predictBtn.innerHTML="Predict Score";
 
-footer {
-    text-align:center;
-    padding:30px 0;
-    color:#94a3b8;
-    border-top:1px solid rgba(255,255,255,.1);
-}
+            predictBtn.disabled=false;
 
+        }
 
-/* ================= ANIMATION ================= */
 
-@keyframes floating {
+    });
 
-    0%,100% {
-        transform:translateY(0);
-    }
 
-    50% {
-        transform:translateY(-10px);
-    }
 
-}
+    /* ---------- Reset ---------- */
 
 
-.result-circle {
-    animation:floating 4s infinite;
-}
+    resetBtn.addEventListener("click",()=>{
 
 
-/* ================= RESPONSIVE ================= */
+        form.reset();
 
 
-@media(max-width:900px){
+        resultCircle.innerHTML="--";
 
-    .input-grid,
-    .feature-grid {
-        grid-template-columns:1fr;
-    }
+        resultText.innerHTML=
+        "Your Result Appears Here";
 
 
-    .hero {
-        padding-top:50px;
-    }
+    });
 
 
-    .prediction-card {
-        padding:20px;
-    }
 
-}
-
-
-@media(max-width:600px){
-
-    .container {
-        width:94%;
-    }
-
-
-    .logo,
-    .brand {
-        font-size:25px;
-    }
-
-
-    .hero h1 {
-        font-size:38px;
-    }
-
-
-    .button-group {
-        flex-direction:column;
-    }
-
-
-    button {
-        width:100%;
-    }
-
-
-    .result-circle {
-        width:180px;
-        height:180px;
-    }
-
-
-    .result-circle h2 {
-        font-size:35px;
-    }
-
-}
+});
