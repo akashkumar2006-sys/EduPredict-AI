@@ -1,47 +1,395 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduPredict AI</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EduPredict AI | Student Performance Predictor</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
 </head>
+
 <body>
+
+<div class="bg-circle bg1"></div>
+<div class="bg-circle bg2"></div>
 
 <div class="container">
 
-    <h1>🎓 EduPredict AI</h1>
-    <h2>Student Score Prediction System</h2>
+<header>
 
-    <form action="/predict" method="POST">
+<div class="logo">
 
-        <label>Hours Studied</label>
-        <input type="number" name="hours" min="0" max="24" required>
-
-        <label>Previous Score</label>
-        <input type="number" name="previous" min="0" max="100" required>
-
-        <label>Attendance (%)</label>
-        <input type="number" name="attendance" min="0" max="100" required>
-
-        <label>Sleep Hours</label>
-        <input type="number" name="sleep" min="0" max="24" required>
-
-        <label>Sample Papers Practiced</label>
-        <input type="number" name="papers" min="0" required>
-
-        <button type="submit">Predict Score</button>
-
-    </form>
-
-    {% if prediction %}
-    <div class="result">
-        <h2>Predicted Score</h2>
-        <h1>{{ prediction }}</h1>
-    </div>
-    {% endif %}
+🎓
 
 </div>
+
+<div class="title">
+
+<h1>EduPredict AI</h1>
+
+<p>
+
+AI Powered Student Performance Prediction
+
+</p>
+
+</div>
+
+</header>
+
+<section class="hero">
+
+<h2>
+
+Predict Student Scores with Artificial Intelligence
+
+</h2>
+
+<p>
+
+Analyze study habits and academic performance using Machine Learning.
+Fill in your details below and receive an instant prediction.
+
+</p>
+
+</section>
+
+<form action="/predict" method="POST">
+
+<div class="input-card">
+
+<label>
+
+📚 Hours Studied <span>(0–24 Hours)</span>
+
+</label>
+
+<input
+
+type="number"
+
+name="hours"
+
+min="0"
+
+max="24"
+
+step="1"
+
+placeholder="Example : 7"
+
+required>
+
+</div>
+
+<div class="input-card">
+
+<label>
+
+📊 Previous Score <span>(0–100)</span>
+
+</label>
+
+<input
+
+type="number"
+
+name="previous"
+
+min="0"
+
+max="100"
+
+step="1"
+
+placeholder="Example : 86"
+
+required>
+
+</div>
+<div class="input-card">
+
+<label>
+
+📅 Attendance <span>(0–100%)</span>
+
+</label>
+
+<input
+
+type="number"
+
+name="attendance"
+
+min="0"
+
+max="100"
+
+step="1"
+
+placeholder="Example : 95"
+
+required>
+
+</div>
+
+<div class="input-card">
+
+<label>
+
+😴 Sleep Hours <span>(0–24 Hours)</span>
+
+</label>
+
+<input
+
+type="number"
+
+name="sleep"
+
+min="0"
+
+max="24"
+
+step="1"
+
+placeholder="Example : 8"
+
+required>
+
+</div>
+
+<div class="input-card">
+
+<label>
+
+📝 Sample Papers Practiced <span>(0+)</span>
+
+</label>
+
+<input
+
+type="number"
+
+name="papers"
+
+min="0"
+
+step="1"
+
+placeholder="Example : 5"
+
+required>
+
+</div>
+
+<div class="button-group">
+
+<button class="predict-btn" type="submit">
+
+🚀 Predict Score
+
+</button>
+
+<button class="reset-btn" type="reset">
+
+🔄 Reset
+
+</button>
+
+</div>
+
+</form>
+
+{% if prediction %}
+
+<section class="prediction-card">
+
+<h3>
+
+🎯 Prediction Result
+
+</h3>
+
+<div class="score-circle">
+
+{{ prediction }}
+
+</div>
+
+<p>
+
+Your predicted examination score based on the entered details.
+
+</p>
+
+</section>
+
+{% endif %}
+<section class="features">
+
+<h2 class="section-title">
+
+✨ Why Choose EduPredict AI?
+
+</h2>
+
+<div class="feature-grid">
+
+<div class="feature-card">
+
+<div class="feature-icon">🤖</div>
+
+<h3>AI Prediction</h3>
+
+<p>
+
+Powered by Machine Learning to estimate student performance accurately.
+
+</p>
+
+</div>
+
+<div class="feature-card">
+
+<div class="feature-icon">⚡</div>
+
+<h3>Instant Results</h3>
+
+<p>
+
+Predict your expected examination score within seconds.
+
+</p>
+
+</div>
+
+<div class="feature-card">
+
+<div class="feature-icon">📊</div>
+
+<h3>Data Driven</h3>
+
+<p>
+
+Uses academic history and study habits for prediction.
+
+</p>
+
+</div>
+
+<div class="feature-card">
+
+<div class="feature-icon">📱</div>
+
+<h3>Mobile Friendly</h3>
+
+<p>
+
+Designed to work smoothly on phones, tablets and desktops.
+
+</p>
+
+</div>
+
+<div class="feature-card">
+
+<div class="feature-icon">🎯</div>
+
+<h3>High Accuracy</h3>
+
+<p>
+
+Built using a trained Machine Learning regression model.
+
+</p>
+
+</div>
+
+<div class="feature-card">
+
+<div class="feature-icon">🔒</div>
+
+<h3>Secure</h3>
+
+<p>
+
+No personal information is stored after prediction.
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="about">
+
+<h2>
+
+📖 About EduPredict AI
+
+</h2>
+
+<p>
+
+EduPredict AI is a Machine Learning web application that predicts a student's expected examination score using study habits, attendance, previous academic performance, sleep schedule and sample paper practice.
+
+The project is developed using Python, Flask, HTML, CSS, JavaScript and Scikit-learn.
+
+</p>
+
+</section>
+<footer>
+
+<div class="footer-content">
+
+<h3>EduPredict AI</h3>
+
+<p>
+
+Built with ❤️ using Python, Flask, HTML, CSS, JavaScript and Machine Learning.
+
+</p>
+
+<div class="footer-tech">
+
+<span>🐍 Python</span>
+
+<span>⚡ Flask</span>
+
+<span>🤖 Scikit-Learn</span>
+
+<span>🎨 HTML • CSS • JavaScript</span>
+
+</div>
+
+<p class="copyright">
+
+© 2026 EduPredict AI • Developed by Akash Kumar Jha
+
+</p>
+
+</div>
+
+</footer>
+
+</div>
+
 <script src="{{ url_for('static', filename='script.js') }}"></script>
+
 </body>
+
 </html>
